@@ -9,6 +9,7 @@
 import UIKit
 import Reachability
 import Alamofire
+import CoreTelephony
 
 class RequestManager: NSObject {
     static let shared = RequestManager.init()
@@ -22,9 +23,20 @@ class RequestManager: NSObject {
 extension RequestManager {
     /// get and manipulate data behind all Blockchain.info's charts.
     func getBlockchainData(timespan: EnumSet.Timespan, callBack: @escaping (ChartInfo?) -> Void) -> Void {
+        
+//        if self.decideNetworkService() == false {
+//            
+//            ComponentManager.jumpToSysSettingPage()
+//            
+//            callBack(nil)
+//            return
+//        }
+        
+        
         if self.decideNetworkStatusIsAvailable() == false {
             callBack(nil)
             
+            return
         }
         
         AF.request(
@@ -86,6 +98,23 @@ extension RequestManager {
             return false
             
         }
+    }
+    
+    /// 检测网络权限
+    func decideNetworkService() -> Bool {
+        let cellularData = CTCellularData()
+        
+        let state = cellularData.restrictedState
+        
+        if state == CTCellularDataRestrictedState.restrictedStateUnknown
+            ||  state == CTCellularDataRestrictedState.notRestricted {
+            return false
+            
+        } else {
+            return true
+            
+        }
+        
     }
     
 }
