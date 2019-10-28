@@ -1,0 +1,21 @@
+source 'https://github.com/CocoaPods/Specs.git'
+project 'CurrentBitcoinPrice.xcodeproj'
+
+platform :ios, '11.1'
+
+target 'CurrentBitcoinPrice' do
+  use_frameworks!
+
+  # UI
+  pod 'SwiftCharts', :git =>
+      'https://github.com/i-schuetz/SwiftCharts.git'   # 函数图像
+  
+  # Data
+  pod "Timepiece"                             # Date
+  
+  # Network
+  pod 'Alamofire', '~> 5.0.0-rc.2'            # Request
+  pod 'HandyJSON', '~> 5.0.1'                 # JSON
+  pod 'ReachabilitySwift'                     # NetStatus
+
+end
